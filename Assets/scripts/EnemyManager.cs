@@ -55,8 +55,7 @@ public class EnemyManager : MonoBehaviour
         Vector3 startVec = transform.position + transform.right * 0.5f * transform.localScale.x;
         Vector3 endVec = startVec - transform.up * 0.5f;
         Debug.DrawLine(startVec, endVec);
-        return Physics2D.Linecast(startVec, endVec, blockLayer);
-            
+        return Physics2D.Linecast(startVec, endVec, blockLayer);  
     }
 
     void ChangeDirection()
