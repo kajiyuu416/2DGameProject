@@ -10,7 +10,6 @@ TagManager:
   - Enemy
   - Spikes
   - Enemy2
-  - Item2
   layers:
   - Default
   - TransparentFX

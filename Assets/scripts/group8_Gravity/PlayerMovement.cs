@@ -99,15 +99,13 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //踏んだらプレイヤーをジャンプさせる
-    void jump()
+    private void jump()
     {
         rigidbody2D.AddForce(Vector2.up * jumpPower);
        
     }
-    bool IsGround()
+    private bool IsGround()
     {
-        //Debug.DrawLine(transform.position - transform.right * 0.2f, transform.position - transform.up * 0.1f);
-        //Debug.DrawLine(transform.position + transform.right * 0.2f, transform.position - transform.up * 0.1f);
         return Physics2D.Linecast(transform.position - transform.right * 0.2f, transform.position - transform.up * 0.1f, blockLayer)
             || Physics2D.Linecast(transform.position + transform.right * 0.2f, transform.position - transform.up * 0.1f, blockLayer);
     }
@@ -120,24 +118,22 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if (collision.gameObject.tag == "Trap")
+        if (collision.CompareTag("Trap"))
         {
             PlayerDeath();
         }
+
         if (collision.gameObject.tag == "END")
         {
             gameManager.GameClear();
         }
+
         if (collision.gameObject.tag == "Item")
         {
             collision.gameObject.GetComponent<ItemManager>().GetItem();
             audioSource.PlayOneShot(getItemSE);
         }
-        if (collision.gameObject.tag == "Item2")
-        {
-            collision.gameObject.GetComponent<ItemManager2>().GetItem();
-            audioSource.PlayOneShot(getItemSE);
-        }
+
         if (collision.gameObject.tag == "Enemy")
         {
             EnemyManager enemy = collision.gameObject.GetComponent<EnemyManager>();
@@ -168,21 +164,18 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-        //プレイヤーが死亡した際の処理
-        void PlayerDeath()
-        {
-            isDead = true;
-            animator.Play("PlayerDeathAnimation");
-            rigidbody2D.velocity = new Vector2(0, 0);
-            jump();
-            BoxCollider2D boxCollider2D = GetComponent<BoxCollider2D>();
-            CircleCollider2D circleCollider2D = GetComponent<CircleCollider2D>();
-            Destroy(boxCollider2D);
-            Destroy(circleCollider2D);
-            gameManager.GameOver();
-        }
-
-
-
+    }
+    //プレイヤーが死亡した際の処理
+    void PlayerDeath()
+    {
+        isDead = true;
+        animator.Play("PlayerDeathAnimation");
+        rigidbody2D.velocity = new Vector2(0, 0);
+        jump();
+        BoxCollider2D boxCollider2D = GetComponent<BoxCollider2D>();
+        CircleCollider2D circleCollider2D = GetComponent<CircleCollider2D>();
+        Destroy(boxCollider2D);
+        Destroy(circleCollider2D);
+        gameManager.GameOver();
     }
 }

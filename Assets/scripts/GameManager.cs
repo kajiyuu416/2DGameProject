@@ -10,14 +10,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject gameOverTextobj;
     [SerializeField] GameObject gameClearTextobj;
     [SerializeField] Text scoreText;
-    //SE
     [SerializeField] AudioClip clearSE;
     [SerializeField] AudioClip gameoverSE;
-    AudioSource audioSource;
-
-
-    const int MAX_SCORE = 9999;
-    int score = 0;
+    private AudioSource audioSource;
+    private const int MAX_SCORE = 9999;
+    private int score = 0;
 
     private void Start()
     {
@@ -40,7 +37,7 @@ public class GameManager : MonoBehaviour
         gameOverTextobj.SetActive(true);
         audioSource.Stop();
         audioSource.PlayOneShot(gameoverSE);
-        Invoke("ReStartThiScene", 1f);
+        StartCoroutine(ReStartThiScene());
        
     }
     public void GameClear()
@@ -50,10 +47,10 @@ public class GameManager : MonoBehaviour
         audioSource.PlayOneShot(clearSE);
     }
 
-    void ReStartThiScene()
+    private IEnumerator ReStartThiScene()
     {
+        yield return new WaitForSeconds(1.0f); // íxâÑéûä‘Çê›íËÇ∑ÇÈ  
         Scene ThisScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(ThisScene.name);
-
     }
 }
